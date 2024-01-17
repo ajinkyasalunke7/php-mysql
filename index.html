@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Information Form</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body class="bg-secondary-emphasis">
+    <div class="container mt-5">
+      <h2 class="text-center">Student Information</h2>
+      <form
+        id="frm"
+        name="myForm"
+        onsubmit="event.preventDefault(); Validate();"
+        method="post"
+      >
+        <div class="form-group">
+          <label for="name">Name :</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email :</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="age">Age :</label>
+          <input
+            type="number"
+            class="form-control"
+            id="age"
+            name="age"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label class="m-2">Gender :</label>
+          <div class="form-check form-check-inline">
+            <input
+              type="radio"
+              class="form-check-input"
+              id="male"
+              name="gender"
+              value="male"
+            />
+            <label class="form-check-label m-2" for="male">Male</label>
+            <input
+              type="radio"
+              class="form-check-input"
+              id="female"
+              name="gender"
+              value="female"
+            />
+            <label class="form-check-label m-2" for="female">Female</label>
+            <input
+              type="radio"
+              class="form-check-input"
+              id="other"
+              name="gender"
+              value="other"
+            />
+            <label class="form-check-label m-2" for="other">Other</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="enroll">Enrollment No :</label>
+          <input
+            type="number"
+            class="form-control"
+            id="enroll"
+            name="enroll"
+            pattern="\d{10}"
+            maxlength="10"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="department">Department :</label>
+          <select
+            class="form-control"
+            id="department"
+            name="department"
+            required
+          >
+            <option value="">- - - - Select Department - - - -</option>
+            <option value="Computer Engineering">Computer Engineering</option>
+            <option value="IT">IT</option>
+            <option value="Mechanical Engineering">
+              Mechanical Engineering
+            </option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <!-- Add more department options as needed -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Division :</label>
+          <div class="form-check form-check-inline">
+            <input
+              type="radio"
+              class="form-check-input m-2"
+              id="divisionA"
+              name="division"
+              value="A"
+            />
+            <label class="form-check-label" for="divisionA">A</label>
+            <input
+              type="radio"
+              class="form-check-input m-2"
+              id="divisionB"
+              name="division"
+              value="B"
+            />
+            <label class="form-check-label" for="divisionB">B</label>
+            <input
+              type="radio"
+              class="form-check-input m-2"
+              id="divisionC"
+              name="division"
+              value="C"
+            />
+            <label class="form-check-label" for="divisionC">C</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="address">Address :</label>
+          <textarea
+            class="form-control"
+            id="address"
+            name="address"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btn btn-success" value="Submit" />
+        </div>
+      </form>
+      <div id="loadingSpinner"></div>
+    </div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+      function Validate() {
+        // Get form elements
+        var name = document.forms["myForm"]["name"].value.trim();
+        var email = document.forms["myForm"]["email"].value.trim();
+        var age = document.forms["myForm"]["age"].value.trim();
+        var gender = document.forms["myForm"]["gender"].value;
+        var enroll = document.forms["myForm"]["enroll"].value.trim();
+        var department = document.forms["myForm"]["department"].value;
+        var division = document.forms["myForm"]["division"].value;
+        var address = document.forms["myForm"]["address"].value.trim();
+
+        // Regular expression patterns
+        var namePattern = /^[a-zA-Z\s]+$/;
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var enrollPattern = /^\d{10}$/;
+
+        // Validation logic
+        if (!namePattern.test(name)) {
+          alert("Please enter a valid name.");
+          return false;
+        }
+
+        if (!emailPattern.test(email)) {
+          alert("Please enter a valid email address.");
+          return false;
+        }
+
+        if (isNaN(age) || age <= 0) {
+          alert("Please enter a valid age.");
+          return false;
+        }
+
+        if (!enrollPattern.test(enroll)) {
+          alert("Please enter a valid 10-digit enrollment number.");
+          return false;
+        }
+
+        if (department === "") {
+          alert("Please select a department.");
+          return false;
+        }
+
+        if (division === undefined) {
+          alert("Please select a division.");
+          return false;
+        }
+
+        if (address === "") {
+          alert("Please enter your address.");
+          return false;
+        }
+
+        // If all validations pass, submit the form
+        submitForm();
+      }
+
+      function submitForm() {
+        const form = document.getElementById("frm");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+
+        // Display the loading spinner
+        loadingSpinner.style.display = "block";
+        form.style.display = "none";
+
+        // Using Fetch API to make an AJAX request
+        fetch("df.php", {
+          method: "POST",
+          body: new FormData(form),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Hide the loading spinner
+            loadingSpinner.style.display = "block";
+            form.style.display = "none";
+
+            // Check if the response has the 'status' property
+            if ("status" in data) {
+              // Displaying an alert based on the server response
+              if (data.status === "success") {
+                // Show a success message after 5 seconds
+                setTimeout(() => {
+                  loadingSpinner.style.display = "none";
+                  alert("Data entered successfully");
+                  form.style.display = "block";
+                  frm.reset();
+                }, 1500);
+              } else {
+                alert("Error adding entry. Please try again.");
+              }
+            } else {
+              // Handle unexpected response format
+              alert("Unexpected response format. Please try again.");
+            }
+          })
+          .catch((error) => {
+            // Hide the loading spinner
+            loadingSpinner.style.display = "none";
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
